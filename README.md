@@ -36,5 +36,14 @@ await glide.updateRow("your-table-id", rowIds[0], { status: "reserved" });
 ```
 
 `listTables`, `getRows`, `addRows`, `updateRow`, and `deleteRow` map directly to
-Glide API v2 endpoints. `GlideApiError` preserves the HTTP status and Glide error
-type for application-level handling.
+Glide API v2 endpoints. Use the optional `limit` and `offset` arguments on
+`getRows` when reading a large table so callers do not download every row at
+once:
+
+```ts
+const firstPage = await glide.getRows("your-table-id", { limit: 100 });
+const secondPage = await glide.getRows("your-table-id", { limit: 100, offset: 100 });
+```
+
+`GlideApiError` preserves the HTTP status and Glide error type for
+application-level handling.
