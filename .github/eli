@@ -1,0 +1,11 @@
+import { GlideClient } from "./src/glide-client.js";
+
+const glide = new GlideClient({
+  token: process.env.GLIDE_API_TOKEN!,
+});
+
+const tables = await glide.listTables();
+const rowIds = await glide.addRows("your-table-id", [
+  { propertyName: "Harbor View", status: "available" },
+]);
+await glide.updateRow("your-table-id", rowIds[0], { status: "reserved" });
